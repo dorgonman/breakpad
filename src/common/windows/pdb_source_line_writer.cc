@@ -797,7 +797,7 @@ bool PDBSourceLineWriter::GetInlines(IDiaSymbol* block,
     auto iter = inline_origins_.find(name);
     if (iter == inline_origins_.end()) {
       InlineOrigin origin;
-      origin.id = inline_origins_.size();
+      origin.id = (int)inline_origins_.size();
       origin.name = name;
       inline_origins_[name] = origin;
     }

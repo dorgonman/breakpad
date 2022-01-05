@@ -512,7 +512,7 @@ bool Base64Unescape(const char *src, int slen, string* dest) {
   // We are getting the destination buffer by getting the beginning of the
   // string and converting it into a char *.
   const int len = Base64Unescape(src, slen,
-                                 string_as_array(dest), dest->size());
+                                 string_as_array(dest), (int)dest->size());
   if (len < 0) {
     return false;
   }
@@ -595,7 +595,7 @@ int Base64EscapeInternal(const unsigned char *src, int szsrc,
       assert(false);
       break;
   }
-  return (cur_dest - dest);
+  return (int)(cur_dest - dest);
 }
 
 static const char kBase64Chars[] =
@@ -615,7 +615,7 @@ void Base64Escape(const unsigned char *src, int szsrc,
   dest->clear();
   dest->resize(max_escaped_size + 1, '\0');
   const int escaped_len = Base64EscapeInternal(src, szsrc,
-                                               &*dest->begin(), dest->size(),
+                                               &*dest->begin(), (int)dest->size(),
                                                kBase64Chars,
                                                do_padding);
   assert(max_escaped_size <= escaped_len);
@@ -624,7 +624,7 @@ void Base64Escape(const unsigned char *src, int szsrc,
 
 void Base64Escape(const string& src, string* dest) {
   Base64Escape(reinterpret_cast<const unsigned char*>(src.c_str()),
-               src.size(), dest, true);
+               (int)src.size(), dest, true);
 }
 
 ////////////////////////////////////////////////////
@@ -700,7 +700,7 @@ bool WebSafeBase64Unescape(const char *src, int slen, string* dest) {
   int dest_len = 3 * (slen / 4) + (slen % 4);
   dest->clear();
   dest->resize(dest_len);
-  int len = WebSafeBase64Unescape(src, slen, &*dest->begin(), dest->size());
+  int len = WebSafeBase64Unescape(src, slen, &*dest->begin(), (int)dest->size());
   if (len < 0) {
     dest->clear();
     return false;
@@ -712,7 +712,7 @@ bool WebSafeBase64Unescape(const char *src, int slen, string* dest) {
 }
 
 bool WebSafeBase64Unescape(const string& src, string* dest) {
-  return WebSafeBase64Unescape(src.data(), src.size(), dest);
+  return WebSafeBase64Unescape(src.data(), (int)src.size(), dest);
 }
 
 int WebSafeBase64Escape(const unsigned char *src, int szsrc, char *dest,
@@ -728,7 +728,7 @@ void WebSafeBase64Escape(const unsigned char *src, int szsrc,
   dest->clear();
   dest->resize(max_escaped_size + 1, '\0');
   const int escaped_len = Base64EscapeInternal(src, szsrc,
-                                               &*dest->begin(), dest->size(),
+                                               &*dest->begin(), (int)dest->size(),
                                                kWebSafeBase64Chars,
                                                do_padding);
   assert(max_escaped_size <= escaped_len);
@@ -738,10 +738,10 @@ void WebSafeBase64Escape(const unsigned char *src, int szsrc,
 void WebSafeBase64EscapeInternal(const string& src,
                                  string* dest,
                                  bool do_padding) {
-  int encoded_len = CalculateBase64EscapedLen(src.size());
+  int encoded_len = CalculateBase64EscapedLen((int)src.size());
   scoped_array<char> buf(new char[encoded_len]);
   int len = WebSafeBase64Escape(reinterpret_cast<const unsigned char*>(src.c_str()),
-                                src.size(), buf.get(),
+                                (int)src.size(), buf.get(),
                                 encoded_len, do_padding);
   dest->assign(buf.get(), len);
 }

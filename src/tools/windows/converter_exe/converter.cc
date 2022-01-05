@@ -30,6 +30,7 @@
 #pragma comment(lib, "wininet.lib")
 #pragma comment(lib, "diaguids.lib")
 #pragma comment(lib, "imagehlp.lib")
+#pragma comment(lib, "Pathcch.lib")
 
 #include <cassert>
 #include <cstdio>

@@ -79,7 +79,7 @@ void WebSafeBase64Escape(const unsigned char* src, int szsrc,
 int Base64Unescape(const char* src, int slen, char* dest, int szdest);
 bool Base64Unescape(const char* src, int slen, string* dest);
 inline bool Base64Unescape(const string& src, string* dest) {
-  return Base64Unescape(src.data(), src.size(), dest);
+  return Base64Unescape(src.data(), (int)src.size(), dest);
 }
 
 

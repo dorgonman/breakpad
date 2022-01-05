@@ -117,7 +117,7 @@ static bool GetFileVersionString(const wchar_t* filename, wstring* version) {
 static bool DumpSymbolsToTempFile(const wchar_t* file,
                                   wstring* temp_file_path,
                                   PDBModuleInfo* pdb_info) {
-  google_breakpad::PDBSourceLineWriter writer;
+  google_breakpad::PDBSourceLineWriter writer{true};
   // Use EXE_FILE to get information out of the exe/dll in addition to the
   // pdb.  The name and version number of the exe/dll are of value, and
   // there's no way to locate an exe/dll given a pdb.

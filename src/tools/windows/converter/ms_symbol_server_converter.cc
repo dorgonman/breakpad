@@ -546,7 +546,7 @@ MSSymbolServerConverter::LocateAndConvertSymbolFile(
     return LOCATE_FAILURE;
   }
 
-  PDBSourceLineWriter writer;
+  PDBSourceLineWriter writer{true};
   wstring pe_file_w;
   if (!WindowsStringUtils::safe_mbstowcs(pe_file, &pe_file_w)) {
     fprintf(stderr,
